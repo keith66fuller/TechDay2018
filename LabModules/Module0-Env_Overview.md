@@ -42,6 +42,7 @@ If you're not familiar with Postman let me know and we'll spend a few minutes co
 
 1. Import the Postman Environment and collection from the repo (/TechDay2018-master/LabFiles/).
 3. Note the use of variable substitution using the {{variable}} nomenclature.
+3. _Turn off 'SSL Certificate Checking' in the Postman preferences_
 
 ### Visual Studio Code
 I've included a decent editor/IDE for viewing/editing javascript files -- Visual Studio Code. Feel free to use whatever editor you are comfortable with.
