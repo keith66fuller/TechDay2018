@@ -32,9 +32,14 @@ The BIG-IPs are using default credentials. For the Windows and Docker hosts use 
   * Download the repository as unzip it on the desktop.
   * View the Lab Guides under the 'LabModules' directory. These are all in markdown and will display nicely on Github. 
   * Feel free to clone the repo locally (instead of on the Windows jump host) if that's easier.
-3. Verify Access to your other Lab devices.
-    * TMUI and SSH access are needed for the BIG-IP device.
-    * SSH access is needed to the ubuntu/docker device.
+
+### Verify Access to your other Lab devices
+  * TMUI and SSH access are needed for the BIG-IP device.
+  * SSH access is needed to the ubuntu/docker device.
+
+### Create the 'student' user on the BIG-IP
+ * For some reason this user didn't make it through the UDP revisions
+ * Give the student user 'Guest" on all partitions
  
 
 ### Postman
