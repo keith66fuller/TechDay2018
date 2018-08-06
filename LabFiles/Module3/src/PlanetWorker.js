@@ -25,7 +25,7 @@ class PlanetWorker {
     }
 
     onStartCompleted(success, error, state, errMsg) {
-        this.state = state;
+        this.state = state || {};
         success();
     }
 
