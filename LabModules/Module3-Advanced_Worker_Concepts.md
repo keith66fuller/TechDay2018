@@ -4,7 +4,7 @@ Coming in Flatrock there will be a TMUI method to install RPMs. Let's activate t
 
 Give TMUI a minute to allow the configuration utility to become responsive and then log in. Browse to iApps -> Package Management LX. Here you'll find a simple GUI for installing and removing RPM packages.
 
-Install the "Module3-0.1-001.noarch.rpm" package from the /TechDay2018/LabFiles/Module3 directory of the repo. This will install all the workers needed for this module. All workers included in this RPM can be found in the ```src``` folder of the Module3 folder. Open them in your text editor to follow along with the code samples in the guide.
+Install the "Module3-0.1-001.noarch.rpm" package from the /TechDay2018-master/LabFiles/Module3 directory of the repo. This will install all the workers needed for this module. All workers included in this RPM can be found in the ```src``` folder of the Module3 folder. Open them in your text editor to follow along with the code samples in the guide.
 
 
 
