@@ -1,4 +1,4 @@
-# Module 2 -- Debugging, Events, and RBAC #
+# Module 2 - Debugging, Events, and RBAC #
 ### Task 1: Debug/update an installed worker
 __This procedure is only suitable for Dev/POC systems. You would never want to do this on a BIG-IP with production traffic/iCLX workers.__
 
@@ -10,7 +10,7 @@ __This procedure is only suitable for Dev/POC systems. You would never want to d
     * In order for _restnoded_ to register your change the service will need to be restarted. One way to do this is through tmsh.
     
 ```bash 
-tmsh restart sys service restnoded
+$ bigstart restart restnoded
 ```
 * Verify your worker was updated by sending an appropiate GET request.
 
@@ -26,9 +26,13 @@ Concepts: Anatomy of a worker, updating a worker, registering those changes in r
 
 
 ### Task 2: Build/Install the MemoryWorker.js extension
-* Using the steps in Task 1 and Task 2 from Module 1, build and install the memoryworker.js iControl extension. 
-  * Copy the extension from the /TechDay2018/LabFiles/Module2/ folder in the repo to the build directory on the Big-IP device.
-  * Update the {{extension_name}} Postman environment variable.
+* Using the steps in Task 1 and Task 2 from Module 1, build and install the memoryworker.js iControl extension.
+  * Create the build directory.
+  ```bash
+  $ mkdir -p /var/config/rest/iapps/MemoryWorker/nodejs
+  ```
+  * Copy the "memoryworker.js" extension from the /TechDay2018-master/LabFiles/Module2/ folder in the repo to the build directory on the Big-IP device.
+  * Update the {{extension_name}} Postman environment variable (the build directory name - ie. "MemoryWorker").
   * Build the RPM with the correct request.
   * Copy the RPM to the installation directory.
   * Install the RPM with the correct request.
@@ -77,9 +81,9 @@ MemoryWorker.prototype.onGet = function(restOperation) {
     this.completeRestOperation(restOperation);
 };
 ```
-* From the 'Task 2' folder send the GET example and note the response.
-* From the 'Task 2' folder send the example POST _Memoryworker example POST_.
-* Send the example GET with 'Memoryworker Example GET', and note the response.
+* From the 'Task 2' folder send the GET example and note the response. Is there "Data"?
+* From the 'Task 2' folder examine and send the example POST.
+* Send the example GET with again, and note the response.
 * Change the persisted data by updating the previous POST request. What HTTP methods are available? Why doesn't the version increment? 
 
 * Restart _restnoded_. What is the value of _Data_ now?
@@ -112,6 +116,7 @@ In the previous exercises, we made requests to iControlLX extension URIs using t
     * This is showing you the resources assigned to the _iControl_REST_API_User_ role.
     * There are two ways to assign resources (Mask, and restMethod) to a role. Explicitly, or inherited through a _resource-group_. 
     * Note that we could also add these resources directly to the _shared-authz-users-student_ role which was created when the 'student' account was created. For this example, we want to create a role that could be usable by many different accounts. 
+    * Those are some pretty expansive permissions, huh? Users are automatically added to this _iControl_REST_API_User_ role when created in 13.1. Some customers have started removing less privledged users from this group. Regardless, these permissions do not cover what we need (/mgmt/shared/*).
     
 * Send the _Create iCLX Role for Memory Worker_ request.
     * Look at the POST response. Notice the _userReferences_ section and the _resources_ section.

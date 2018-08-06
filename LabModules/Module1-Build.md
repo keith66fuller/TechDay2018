@@ -28,7 +28,7 @@ mkdir -p /var/config/rest/iapps/HelloWorld/nodejs
 * Browse to the "Task 1: Build RPM" folder of the "Module1" directory.
 
 
-* Set/verify the Postman environment variable {{extension_name}} is set to the build directory name (just the directory name -- not the full path) you created earlier -- "HelloWorld" in this case.
+* __Set__ the Postman environment variable {{extension_name}} (__Current Value__) to the build directory name (just the directory name -- not the full path) you created earlier -- "HelloWorld" in this case.
 
 
 * Send the 'Create RPM on Big-IP' request. This procedure follows the 'tasks' pattern (the initial ```status``` will be "CREATED").
@@ -73,5 +73,5 @@ tailf /var/log/restnoded/restnoded.log
 
 * Open 'helloWorld.js' in your text editor. Find the ```WORKER_URI_PATH```. 
 
-* Open your web browser to https://{{bigip1_mgmt}}/mgmt/{{WORKER_URI_PATH}} . What is the result?
+* Open your web browser to https://{{bigip1_mgmt}}/mgmt/{{WORKER_URI_PATH}} . Provide basic auth credentials if needed. What is the result?
 
