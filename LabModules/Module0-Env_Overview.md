@@ -40,7 +40,7 @@ The BIG-IPs are using default credentials. For the Windows and Docker hosts use 
 ### Postman
 If you're not familiar with Postman let me know and we'll spend a few minutes covering the tool.
 
-1. Import the Postman Environment and collection from the repo (/TechDay2018/LabFiles/).
+1. Import the Postman Environment and collection from the repo (/TechDay2018-master/LabFiles/).
 3. Note the use of variable substitution using the {{variable}} nomenclature.
 
 ### Visual Studio Code
