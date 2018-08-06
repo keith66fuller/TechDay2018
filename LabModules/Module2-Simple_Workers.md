@@ -1,4 +1,4 @@
-# Module 2 -- Debugging, Events, and RBAC #
+# Module 2 - Debugging, Events, and RBAC #
 ### Task 1: Debug/update an installed worker
 __This procedure is only suitable for Dev/POC systems. You would never want to do this on a BIG-IP with production traffic/iCLX workers.__
 
@@ -29,7 +29,7 @@ Concepts: Anatomy of a worker, updating a worker, registering those changes in r
 * Using the steps in Task 1 and Task 2 from Module 1, build and install the memoryworker.js iControl extension.
   * Create the build directory.
   ```bash
-  $ mkdir -p /var/config/rest/iapps/MemoryWorker
+  $ mkdir -p /var/config/rest/iapps/MemoryWorker/nodejs
   ```
   * Copy the "memoryworker.js" extension from the /TechDay2018-master/LabFiles/Module2/ folder in the repo to the build directory on the Big-IP device.
   * Update the {{extension_name}} Postman environment variable (the build directory name - ie. "MemoryWorker").
