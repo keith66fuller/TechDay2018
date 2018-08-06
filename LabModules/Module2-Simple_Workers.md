@@ -116,6 +116,7 @@ In the previous exercises, we made requests to iControlLX extension URIs using t
     * This is showing you the resources assigned to the _iControl_REST_API_User_ role.
     * There are two ways to assign resources (Mask, and restMethod) to a role. Explicitly, or inherited through a _resource-group_. 
     * Note that we could also add these resources directly to the _shared-authz-users-student_ role which was created when the 'student' account was created. For this example, we want to create a role that could be usable by many different accounts. 
+    * Those are some pretty expansive permissions, huh? Users are automatically added to this _iControl_REST_API_User_ role when created in 13.1. Some customers have started removing less privledged users from this group. Regardless, these permissions do not cover what we need (/mgmt/shared/*).
     
 * Send the _Create iCLX Role for Memory Worker_ request.
     * Look at the POST response. Notice the _userReferences_ section and the _resources_ section.
