@@ -73,5 +73,5 @@ tailf /var/log/restnoded/restnoded.log
 
 * Open 'helloWorld.js' in your text editor. Find the ```WORKER_URI_PATH```. 
 
-* Open your web browser to https://{{bigip1_mgmt}}/mgmt/{{WORKER_URI_PATH}} . What is the result?
+* Open your web browser to https://{{bigip1_mgmt}}/mgmt/{{WORKER_URI_PATH}} . Provide basic auth credentials if needed. What is the result?
 
