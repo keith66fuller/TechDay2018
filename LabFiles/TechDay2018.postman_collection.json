@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "14ae3da5-1072-4076-8625-308348b6432f",
+		"_postman_id": "a9ecb7d6-e455-43f1-9628-7e65f73aed6b",
 		"name": "TechDay2018",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -694,11 +694,11 @@
 		},
 		{
 			"name": "Module2 (Simple Workers)",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Task 1: Debug Workflow",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Restart restnoded",
@@ -1378,11 +1378,119 @@
 		},
 		{
 			"name": "Module 3 (Advanced Worker Concepts)",
-			"description": "",
+			"description": null,
 			"item": [
 				{
-					"name": "HelloPlanet",
+					"name": "Task1 - TMUI RPM Install",
 					"description": "",
+					"item": [
+						{
+							"name": "Enable LX Package Management",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "17d3ef06-ac13-4678-b237-c848a722026c",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\":\"run\", \n\t\"utilCmdArgs\": \"-c 'touch /var/config/rest/iapps/enable'\"\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/util/bash",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"bash"
+									]
+								},
+								"description": "Not strictly necessary but useful to see the status of the package in the GUI."
+							},
+							"response": []
+						},
+						{
+							"name": "Restart the TMUI Service",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "17d3ef06-ac13-4678-b237-c848a722026c",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\":\"restart\"\n\t\n}\n"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/sys/service/tomcat",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"sys",
+										"service",
+										"tomcat"
+									]
+								},
+								"description": "Not strictly necessary but useful to see the status of the package in the GUI."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "HelloPlanet",
+					"description": null,
 					"item": [
 						{
 							"name": "Hello Worker",
@@ -1672,7 +1780,7 @@
 				},
 				{
 					"name": "Nodes",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Nodes Worker",
@@ -1988,11 +2096,11 @@
 		},
 		{
 			"name": "Module4  (API Service Gateway Container)",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Task2",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Check discovered devices",
@@ -2002,7 +2110,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{docker_host}}:8443/mgmt/shared/resolver/device-groups/dockerContainers/devices",
 									"protocol": "https",
@@ -2063,7 +2174,7 @@
 				},
 				{
 					"name": "Task3",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Hello World example",
@@ -2073,7 +2184,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "https://{{docker_host}}:8443/mgmt/helloworld",
 									"protocol": "https",
@@ -2094,7 +2208,7 @@
 				},
 				{
 					"name": "Task5",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "View Virtual Servers",
@@ -2197,7 +2311,7 @@
 				},
 				{
 					"name": "Task6",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Hello Worker",
@@ -2937,7 +3051,10 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "https://{{docker_host}}:8443/mgmt/shared/resolver/device-groups/dockerContainers/devices",
 							"protocol": "https",
@@ -3237,11 +3354,11 @@
 		},
 		{
 			"name": "Module 6 (Basic AS3 Examples)",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Install AS3 RPM",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Enable LX Package Management",
@@ -3582,7 +3699,7 @@
 				},
 				{
 					"name": "Declaration Examples",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "Dry-run Sample 1",
