@@ -81,9 +81,9 @@ MemoryWorker.prototype.onGet = function(restOperation) {
     this.completeRestOperation(restOperation);
 };
 ```
-* From the 'Task 2' folder send the GET example and note the response.
-* From the 'Task 2' folder send the example POST _Memoryworker example POST_.
-* Send the example GET with 'Memoryworker Example GET', and note the response.
+* From the 'Task 2' folder send the GET example and note the response. Is there "Data"?
+* From the 'Task 2' folder examine and send the example POST.
+* Send the example GET with again, and note the response.
 * Change the persisted data by updating the previous POST request. What HTTP methods are available? Why doesn't the version increment? 
 
 * Restart _restnoded_. What is the value of _Data_ now?
