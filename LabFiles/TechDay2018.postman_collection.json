@@ -1,0 +1,4090 @@
+{
+	"info": {
+		"_postman_id": "14ae3da5-1072-4076-8625-308348b6432f",
+		"name": "TechDay2018",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Module1 (Build and Deploy)",
+			"description": null,
+			"item": [
+				{
+					"name": "Token Auth",
+					"description": null,
+					"item": [
+						{
+							"name": "Admin",
+							"description": null,
+							"item": [
+								{
+									"name": "Request a Token from Big-IP1",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a46d9281-97d5-48e3-b3d7-ae4d84b170da",
+												"type": "text/javascript",
+												"exec": [
+													"tests[\"Status code is 200\"] = responseCode.code === 200;",
+													"",
+													"var respData = JSON.parse(responseBody);",
+													"",
+													"tests[\"response has token: \" +respData.token.token] = respData.token.token;",
+													"",
+													"postman.setEnvironmentVariable('bigip1_admin_token',respData.token.token);",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": {{bigip_admin_username}},\n  \"password\": {{bigip_admin_password}},\n  \"loginProvidername\": \"tmos\"\n}"
+										},
+										"url": {
+											"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authn/login",
+											"protocol": "https",
+											"host": [
+												"{{bigip1_mgmt}}"
+											],
+											"path": [
+												"mgmt",
+												"shared",
+												"authn",
+												"login"
+											]
+										},
+										"description": "Using Basic Auth, request a token from the iWorkflow platform."
+									},
+									"response": []
+								},
+								{
+									"name": "Increase Auth Token Timeout",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"tests[\"Status code is 200\"] = responseCode.code === 200;",
+													"",
+													"var respData = JSON.parse(responseBody);",
+													"tests[\"Auth Token timeout is: \" +respData.timeout] = respData.timeout;",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "X-F5-Auth-Token",
+												"value": "{{bigip1_admin_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"timeout\":\"10800\"\n}"
+										},
+										"url": {
+											"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authz/tokens/{{bigip1_admin_token}}",
+											"protocol": "https",
+											"host": [
+												"{{bigip1_mgmt}}"
+											],
+											"path": [
+												"mgmt",
+												"shared",
+												"authz",
+												"tokens",
+												"{{bigip1_admin_token}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "User",
+							"description": null,
+							"item": [
+								{
+									"name": "Request a Token from Big-IP1",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6a2b1bdf-110b-4fbb-af43-034e9d135bbf",
+												"type": "text/javascript",
+												"exec": [
+													"tests[\"Status code is 200\"] = responseCode.code === 200;",
+													"",
+													"var respData = JSON.parse(responseBody);",
+													"",
+													"tests[\"response has token: \" +respData.token.token] = respData.token.token;",
+													"",
+													"postman.setEnvironmentVariable('bigip1_user_token',respData.token.token);",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": {{bigip_user_username}},\n  \"password\": {{bigip_user_password}},\n  \"loginProvidername\": \"tmos\"\n}"
+										},
+										"url": {
+											"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authn/login",
+											"protocol": "https",
+											"host": [
+												"{{bigip1_mgmt}}"
+											],
+											"path": [
+												"mgmt",
+												"shared",
+												"authn",
+												"login"
+											]
+										},
+										"description": "Using Basic Auth, request a token from the iWorkflow platform."
+									},
+									"response": []
+								},
+								{
+									"name": "Increase Auth Token Timeout",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"tests[\"Status code is 200\"] = responseCode.code === 200;",
+													"",
+													"var respData = JSON.parse(responseBody);",
+													"tests[\"Auth Token timeout is: \" +respData.timeout] = respData.timeout;",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "X-F5-Auth-Token",
+												"value": "{{bigip1_user_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"timeout\":\"10800\"\n}"
+										},
+										"url": {
+											"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authz/tokens/{{bigip1_user_token}}",
+											"protocol": "https",
+											"host": [
+												"{{bigip1_mgmt}}"
+											],
+											"path": [
+												"mgmt",
+												"shared",
+												"authz",
+												"tokens",
+												"{{bigip1_user_token}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Task 1: Build RPM",
+					"description": null,
+					"item": [
+						{
+							"name": "Create RPM on BigIP",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"tests[\"response has id: \" +respData.id] = respData.id;",
+											"",
+											"tests[\"appName is: \" + respData.appName] = respData.appName;",
+											"",
+											"tests[\"App package version is: \" + respData.packageVersion] = respData.packageVersion;",
+											"",
+											"tests[\"App package release is: \" + respData.packageRelease] = respData.packageRelease;",
+											"",
+											"postman.setEnvironmentVariable('rpm_creation_status_id',respData.id);",
+											"",
+											"var rpm_name = respData.appName + \"-\" +respData.packageVersion + \"-\" + respData.packageRelease +\".noarch\";",
+											"",
+											"postman.setEnvironmentVariable('rpm_name', rpm_name);",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"appName\": \"{{extension_name}}\",\n  \"packageVersion\": \"0.1\",\n  \"packageRelease\": \"001\"\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/iapp/build-package",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"iapp",
+										"build-package"
+									]
+								},
+								"description": "the app name used here is the name of the folder for your code in /var/config/rest/iapps"
+							},
+							"response": []
+						},
+						{
+							"name": "Check RPM Creation Process",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is: \" + responseCode.code] = responseCode.code === 200;",
+											"",
+											"var    retryCounter = environment.retryCounter;",
+											"var    retryInterval = environment.retryInterval;",
+											"var    retryLimit = environment.retryLimit;",
+											"",
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"function pausecomp(millis)",
+											"{",
+											"    var date = new Date();",
+											"    var curDate = null;",
+											"    do { curDate = new Date(); }",
+											"    while(curDate-date < millis);",
+											"}",
+											"",
+											"if ( respData.status != \"FINISHED\") {",
+											"    tests[\"retry-counter value is: \" + retryCounter] = retryCounter;",
+											"    if ( parseInt(retryCounter) < parseInt(retryLimit))",
+											"    {",
+											"        tests[\"retry-counter value is: \" + retryCounter] = retryCounter;",
+											"        postman.setEnvironmentVariable(\"retryCounter\", parseInt(retryCounter) + 1);",
+											"        pausecomp(retryInterval);",
+											"        postman.setNextRequest(\"Check RPM creation process\");",
+											"    } else",
+											"    {",
+											"        postman.setEnvironmentVariable(\"retryCounter\", 0);",
+											"        console.log(\"Resetting, retry counter to 0\");",
+											"        tests[\"Retries Expired\"] = true === false;",
+											"}",
+											"} else {",
+											"    tests[\"Process Status is: \" + respData.status] = respData.status == \"FINISHED\"",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/iapp/build-package/{{rpm_creation_status_id}}",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"iapp",
+										"build-package",
+										"{{rpm_creation_status_id}}"
+									]
+								},
+								"description": "Check the status of the RPM creation process"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Task 2: Install RPM",
+					"description": null,
+					"item": [
+						{
+							"name": "Move RPM to install directory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "17d3ef06-ac13-4678-b237-c848a722026c",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\":\"run\", \n\t\"utilCmdArgs\": \"-c 'mv /var/config/rest/iapps/RPMS/{{rpm_name}}.rpm /var/config/rest/downloads/'\"\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/util/bash",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"bash"
+									]
+								},
+								"description": "Not strictly necessary but useful to see the status of the package in the GUI."
+							},
+							"response": []
+						},
+						{
+							"name": "install RPM",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"tests[\"response has id: \" +respData.id] = respData.id;",
+											"",
+											"postman.setEnvironmentVariable('rpm_installation_status_id',respData.id);",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\"operation\": \"INSTALL\",\r\"packageFilePath\": \"/var/config/rest/downloads/{{rpm_name}}.rpm\"\r}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/iapp/package-management-tasks",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"iapp",
+										"package-management-tasks"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Check RPM install process status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is: \" + responseCode.code] = responseCode.code === 200;",
+											"",
+											"var    retryCounter = environment.retryCounter;",
+											"var    retryInterval = environment.retryInterval;",
+											"var    retryLimit = environment.retryLimit;",
+											"",
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"function pausecomp(millis)",
+											"{",
+											"    var date = new Date();",
+											"    var curDate = null;",
+											"    do { curDate = new Date(); }",
+											"    while(curDate-date < millis);",
+											"}",
+											"",
+											"if ( respData.status != \"FINISHED\") {",
+											"    tests[\"retry-counter value is: \" + retryCounter] = retryCounter;",
+											"    if ( parseInt(retryCounter) < parseInt(retryLimit))",
+											"    {",
+											"        tests[\"retry-counter value is: \" + retryCounter] = retryCounter;",
+											"        postman.setEnvironmentVariable(\"retryCounter\", parseInt(retryCounter) + 1);",
+											"        pausecomp(retryInterval);",
+											"        postman.setNextRequest(\"Check RPM install process status\");",
+											"    } else",
+											"    {",
+											"        postman.setEnvironmentVariable(\"retryCounter\", 0);",
+											"        console.log(\"Resetting, retry counter to 0\");",
+											"        tests[\"Retries Expired\"] = true === false;",
+											"}",
+											"} else {",
+											"    tests[\"Process Status is: \" + respData.status] = respData.status == \"FINISHED\"",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/iapp/package-management-tasks/{{rpm_installation_status_id}}",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"iapp",
+										"package-management-tasks",
+										"{{rpm_installation_status_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Delete RPM (if needed)",
+					"description": null,
+					"item": [
+						{
+							"name": "Uninstall RPM",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"tests[\"response has id: \" +respData.id] = respData.id;",
+											"",
+											"postman.setEnvironmentVariable('rpm_uninstall_status_id',respData.id);",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"operation\": \"UNINSTALL\",\n\"packageName\": {{rpm_name}}\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/iapp/package-management-tasks",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"iapp",
+										"package-management-tasks"
+									]
+								},
+								"description": "will delete the RPM from iWF"
+							},
+							"response": []
+						},
+						{
+							"name": "Check uninstall rpm process status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is: \" + responseCode.code] = responseCode.code === 200;",
+											"",
+											"var    retryCounter = environment.retryCounter;",
+											"var    retryInterval = environment.retryInterval;",
+											"var    retryLimit = environment.retryLimit;",
+											"",
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"function pausecomp(millis)",
+											"{",
+											"    var date = new Date();",
+											"    var curDate = null;",
+											"    do { curDate = new Date(); }",
+											"    while(curDate-date < millis);",
+											"}",
+											"",
+											"if ( respData.status != \"FINISHED\") {",
+											"    tests[\"retry-counter value is: \" + retryCounter] = retryCounter;",
+											"    if ( parseInt(retryCounter) < parseInt(retryLimit))",
+											"    {",
+											"        tests[\"retry-counter value is: \" + retryCounter] = retryCounter;",
+											"        postman.setEnvironmentVariable(\"retryCounter\", parseInt(retryCounter) + 1);",
+											"        pausecomp(retryInterval);",
+											"        postman.setNextRequest(\"Check uninstall rpm process status\");",
+											"    } else",
+											"    {",
+											"        postman.setEnvironmentVariable(\"retryCounter\", 0);",
+											"        console.log(\"Resetting, retry counter to 0\");",
+											"        tests[\"Retries Expired\"] = true === false;",
+											"}",
+											"} else {",
+											"    tests[\"Process Status is: \" + respData.status] = respData.status == \"FINISHED\"",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/iapp/package-management-tasks/{{rpm_uninstall_status_id}}",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"iapp",
+										"package-management-tasks",
+										"{{rpm_uninstall_status_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Module2 (Simple Workers)",
+			"description": "",
+			"item": [
+				{
+					"name": "Task 1: Debug Workflow",
+					"description": "",
+					"item": [
+						{
+							"name": "Restart restnoded",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7f14251f-e54c-4fee-a890-3f992e996217",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\"command\":\"restart\"\r}\r"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/sys/service/restnoded",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"sys",
+										"service",
+										"restnoded"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Task 2: Memoryworker.js Extension",
+					"description": null,
+					"item": [
+						{
+							"name": "Memoryworker Example POST",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\"Data\": \"Some bit of persisted DATA.\"\r}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/memory",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"memory"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Memoryworker Example GET",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/memory",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"memory"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7a84634c-7f92-4def-be50-72da700e402e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "49bfd1d6-4f09-46b7-973f-4998f10d1619",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Task 3: iControlLX RBAC",
+					"description": null,
+					"item": [
+						{
+							"name": "View Permissions for 'student' user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userReferences\": [\n    {\n      \"link\": \"https://localhost/mgmt/shared/authz/users/{{iwf_tenant_username}}\"\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authz/users/student",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authz",
+										"users",
+										"student"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View role permissions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bf7ede89-c59e-4877-aca9-bb6966f8e9cc",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"tests[\"response reference: \" +respData.items[1].resourceGroupReferences[0].link] = respData.items[1].resourceGroupReferences[0].link;",
+											"",
+											"postman.setEnvironmentVariable('icr_rg_reference',respData.items[1].resourceGroupReferences[0].link.replace('https://localhost/mgmt/shared/authz/resource-groups/',''));",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userReferences\": [\n    {\n      \"link\": \"https://localhost/mgmt/shared/authz/users/{{iwf_tenant_username}}\"\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authz/roles",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authz",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View resource-group for iCR role",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4f2b9436-3dde-48c3-9917-1730ee29eb48",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userReferences\": [\n    {\n      \"link\": \"https://localhost/mgmt/shared/authz/users/{{iwf_tenant_username}}\"\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authz/resource-groups/{{icr_rg_reference}}",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authz",
+										"resource-groups",
+										"{{icr_rg_reference}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create iCLX Role for Memory Worker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iCLXextensionRole\",\n    \"displayName\": \"iControl LX extension Role for MemoryWorker\",\n    \"userReferences\": [\n        {\n            \"link\": \"https://localhost/mgmt/shared/authz/users/{{bigip_user_username}}\"\n        }\n    ],\n\t\"resources\": [\n\t    {\n\t         \"resourceMask\": \"/mgmt/shared/memory\",\n\t         \"restMethod\": \"GET\"\n\t    }\n\t  ]\n}\n"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authz/roles/",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authz",
+										"roles",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Test GET Permissions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_user_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/memory",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"memory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Test POST Permissions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_user_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\"Data\": \"Some *Other* bit of persisted DATA.\"\r}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/ts2017/memory",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"ts2017",
+										"memory"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Role Permissions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"resources\": [\n    {\n            \"resourceMask\": \"/mgmt/shared/memory\",\n            \"restMethod\": \"GET\"\n    },\n        {\n            \"resourceMask\": \"/mgmt/shared/memory\",\n            \"restMethod\": \"POST\"\n    },\n        {\n            \"resourceMask\": \"/mgmt/shared/memory\",\n            \"restMethod\": \"PUT\"\n    },\n        {\n            \"resourceMask\": \"/mgmt/shared/memory\",\n            \"restMethod\": \"PATCH\"\n    },\n        {\n            \"resourceMask\": \"/mgmt/shared/ts2017/*\",\n            \"restMethod\": \"DELETE\"\n    },\n       {\n            \"resourceMask\": \"/mgmt/shared/ts2017/*/*\",\n            \"restMethod\": \"GET\"\n    },\n        {\n            \"resourceMask\": \"/mgmt/shared/ts2017/*/*\",\n            \"restMethod\": \"POST\"\n    },\n        {\n            \"resourceMask\": \"/mgmt/shared/ts2017/*/*\",\n            \"restMethod\": \"PUT\"\n    },\n        {\n            \"resourceMask\": \"/mgmt/shared/ts2017/*/*\",\n            \"restMethod\": \"PATCH\"\n    },\n        {\n            \"resourceMask\": \"/mgmt/shared/ts2017/*/*\",\n            \"restMethod\": \"DELETE\"\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authz/roles/iCLXextensionRole",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authz",
+										"roles",
+										"iCLXextensionRole"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Test POST Permissions Again",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_user_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\"Data\": \"Some *Other* bit of persisted DATA.\"\r}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/memory",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"memory"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete dedicated iCLX Role",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/authz/roles/iCLXextensionRole",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"authz",
+										"roles",
+										"iCLXextensionRole"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Test GET Permissions Again",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_user_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/memory",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"memory"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "95e323b3-b028-4aa7-b0e5-100ece265c28",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b96942a-776e-461c-8849-0cf45e9505d0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Module 3 (Advanced Worker Concepts)",
+			"description": "",
+			"item": [
+				{
+					"name": "HelloPlanet",
+					"description": "",
+					"item": [
+						{
+							"name": "Hello Worker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/Hello",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"Hello"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Planet Worker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Set a Planet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Hello Worker (updated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/Hello",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"Hello"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Nodes",
+					"description": "",
+					"item": [
+						{
+							"name": "Nodes Worker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/Nodes",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"Nodes"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Nodes Worker Example",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/Nodes/example",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"Nodes",
+										"example"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Create many nodes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \n\t\"start\": \"10.1.1.1\",\n\t\"end\": \"10.1.1.20\"\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/Nodes",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"Nodes"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Nodes Worker (again)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/Nodes",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"Nodes"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0847d447-85d2-47ba-967f-a05c83a51002",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5aa4c617-1406-4eb7-9f91-96ec3e5db6d1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Module4  (API Service Gateway Container)",
+			"description": "",
+			"item": [
+				{
+					"name": "Task2",
+					"description": "",
+					"item": [
+						{
+							"name": "Check discovered devices",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/shared/resolver/device-groups/dockerContainers/devices",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"shared",
+										"resolver",
+										"device-groups",
+										"dockerContainers",
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create discovered device",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "        {\n            \"userName\": \"{{bigip_admin_username}}\",\n            \"password\": \"{{bigip_admin_password}}\",\n            \"address\": \"10.10.0.212\",\n            \"httpsPort\": 443\n        }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/shared/resolver/device-groups/dockerContainers/devices",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"shared",
+										"resolver",
+										"device-groups",
+										"dockerContainers",
+										"devices"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Task3",
+					"description": "",
+					"item": [
+						{
+							"name": "Hello World example",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/helloworld",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"helloworld"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Task5",
+					"description": "",
+					"item": [
+						{
+							"name": "View Virtual Servers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/ltm/virtual",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"virtual"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "View Pools",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/ltm/pool",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"ltm",
+										"pool"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Task6",
+					"description": "",
+					"item": [
+						{
+							"name": "Hello Worker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Hello",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Hello"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Planet Worker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Set a Planet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Hello Worker (updated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Hello",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Hello"
+									]
+								},
+								"description": "will install the RPM on iWF. \n\nthe file need to be in /var/config/rest/downloads/ or it will be rejected"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a planet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set a null planet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get the planet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH to create a planet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Jupiter\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get the planet again",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{bigip_admin_password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{bigip_admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"type": "any"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"planet\": \"Mars\" }"
+								},
+								"url": {
+									"raw": "https://{{docker_host}}:8443/mgmt/Planet",
+									"protocol": "https",
+									"host": [
+										"{{docker_host}}"
+									],
+									"port": "8443",
+									"path": [
+										"mgmt",
+										"Planet"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Module 5 (BIG-IP Settings Worker Example)",
+			"description": null,
+			"item": [
+				{
+					"name": "Retrieve Example Instance Block",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var respData = JSON.parse(responseBody);",
+									"",
+									"tests[\"response has task id: \" +respData.items[0].id] = respData.items[0].id;",
+									"",
+									"postman.setEnvironmentVariable('block_instance_id',respData.items[0].id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{iwf_admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{docker_host}}:8443/mgmt/shared/iapp/blocks/?$filter=state%20eq%20'TEMPLATE'%20and%20name%20eq%20'bigip-settings'",
+							"protocol": "https",
+							"host": [
+								"{{docker_host}}"
+							],
+							"port": "8443",
+							"path": [
+								"mgmt",
+								"shared",
+								"iapp",
+								"blocks",
+								""
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "state%20eq%20'TEMPLATE'%20and%20name%20eq%20'bigip-settings'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find discovered devices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f3901f04-f76b-4cdc-bee1-d9ed6819aa46",
+								"type": "text/javascript",
+								"exec": [
+									"var respData = JSON.parse(responseBody);",
+									"",
+									"tests[\"response has items: \" +respData.items] = respData.items;",
+									"",
+									"var t_address = pm.environment.get('bigip1_mgmt');",
+									"",
+									"for (var i = 0; i < respData.items.length; i++){",
+									"  if (respData.items[i].address == t_address){",
+									"    postman.setEnvironmentVariable('settings_device_selflink', respData.items[i].selfLink)",
+									"  }",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://{{docker_host}}:8443/mgmt/shared/resolver/device-groups/dockerContainers/devices",
+							"protocol": "https",
+							"host": [
+								"{{docker_host}}"
+							],
+							"port": "8443",
+							"path": [
+								"mgmt",
+								"shared",
+								"resolver",
+								"device-groups",
+								"dockerContainers",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Provisioning Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 202\"] = responseCode.code === 202;",
+									"",
+									"var respData = JSON.parse(responseBody);",
+									"",
+									"tests[\"response has uuid: \" +respData.id] = respData.id;",
+									"",
+									"postman.setEnvironmentVariable('settings_task_id',respData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n    \"name\": \"TechDay2018-new-settings\",\n    \"inputProperties\": [\n    {\n        \"id\": \"deviceReference\",\n        \"type\": \"REFERENCE\",\n        \"value\": {\n          \"link\": \"{{settings_device_selflink}}\"\n        }\n    },\n    {\n        \"id\": \"resetToDefaults\",\n        \"type\": \"BOOLEAN\",\n        \"value\": false\n    },\n    {\n      \"id\": \"hostname\",\n      \"type\": \"STRING\",\n      \"value\": \"PStechday1.example.com\"\n    },\n    {\n        \"id\" : \"displaySetup\",\n        \"type\": \"BOOLEAN\",\n        \"value\": false\n    },\n    {\n      \"id\": \"license\",\n      \"type\": \"PROPERTIES\",\n      \"value\": [\n        {\n          \"id\": \"baseRegKey\",\n          \"type\": \"STRING\",\n          \"value\": \"\"\n        },\n        {\n         \"id\": \"addOnKeys\",\n         \"type\": \"JSON\",\n         \"value\": []\n        },\n        {\n          \"id\": \"dossier\",\n          \"type\": \"STRING\"\n        },\n        {\n          \"id\": \"eulaText\",\n          \"type\": \"STRING\",\n          \"value\": \"\"\n        },\n        {\n          \"id\": \"acceptEula\",\n          \"type\": \"BOOLEAN\",\n          \"value\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"ntp\",\n      \"type\": \"PROPERTIES\",\n      \"value\": [\n        {\n          \"id\": \"servers\",\n          \"type\": \"JSON\",\n          \"value\": [\n            \"pool.ntp.org\"\n          ]\n        },\n        {\n          \"id\": \"timezone\",\n          \"type\": \"STRING\",\n          \"value\": \"America/Los_Angeles\"\n        }\n      ]\n    },\n    {\n      \"id\": \"dns\",\n      \"type\": \"PROPERTIES\",\n      \"value\": [\n        {\n          \"id\": \"servers\",\n          \"type\": \"JSON\",\n          \"value\": [\n            \"8.8.8.8\"\n          ]\n        },\n        {\n          \"id\": \"search\",\n          \"type\": \"JSON\",\n          \"value\": [\n            \"localhost\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"syslog\",\n      \"type\": \"PROPERTIES\",\n      \"value\": [\n        {\n          \"id\": \"servers\",\n          \"type\": \"JSON\",\n          \"value\": []\n        }\n      ]\n    }\n  ],\n    \"configurationProcessorReference\": {\n        \"link\": \"https://localhost/mgmt/shared/iapp/processors/bigip-settings-config\"\n    },\n    \"configProcessorTimeoutSeconds\": 200,\n    \"state\": \"BINDING\"\n}"
+						},
+						"url": {
+							"raw": "https://{{docker_host}}:8443/mgmt/shared/iapp/blocks/",
+							"protocol": "https",
+							"host": [
+								"{{docker_host}}"
+							],
+							"port": "8443",
+							"path": [
+								"mgmt",
+								"shared",
+								"iapp",
+								"blocks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Provisioning Task Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{docker_host}}:8443/mgmt/shared/iapp/blocks/{{settings_task_id}}",
+							"protocol": "https",
+							"host": [
+								"{{docker_host}}"
+							],
+							"port": "8443",
+							"path": [
+								"mgmt",
+								"shared",
+								"iapp",
+								"blocks",
+								"{{settings_task_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Device to Factory Defaults",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "14d1659e-9490-483f-9acb-927fa9dbcc0c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 202\"] = responseCode.code === 202;",
+									"",
+									"var respData = JSON.parse(responseBody);",
+									"",
+									"tests[\"response has uuid: \" +respData.id] = respData.id;",
+									"",
+									"postman.setEnvironmentVariable('settings_task_id2',respData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n    \"name\": \"TechDay-reset-settings\",\n    \"inputProperties\": [\n    {\n        \"id\": \"deviceReference\",\n        \"type\": \"REFERENCE\",\n        \"value\": {\n          \"link\": \"{{settings_device_selflink}}\"\n        }\n    },\n    {\n        \"id\": \"resetToDefaults\",\n        \"type\": \"BOOLEAN\",\n        \"value\": true\n    },\n    {\n      \"id\": \"hostname\",\n      \"type\": \"STRING\",\n      \"value\": \"blank-bigip.example.com\"\n    },\n    {\n        \"id\" : \"displaySetup\",\n        \"type\": \"BOOLEAN\",\n        \"value\": false\n    },\n    {\n      \"id\": \"license\",\n      \"type\": \"PROPERTIES\",\n      \"value\": [\n        {\n          \"id\": \"baseRegKey\",\n          \"type\": \"STRING\",\n          \"value\": \"\"\n        },\n        {\n         \"id\": \"addOnKeys\",\n         \"type\": \"JSON\",\n         \"value\": []\n        },\n        {\n          \"id\": \"dossier\",\n          \"type\": \"STRING\"\n        },\n        {\n          \"id\": \"eulaText\",\n          \"type\": \"STRING\",\n          \"value\": \"\"\n        },\n        {\n          \"id\": \"acceptEula\",\n          \"type\": \"BOOLEAN\",\n          \"value\": false\n        }\n      ]\n    },\n    {\n      \"id\": \"ntp\",\n      \"type\": \"PROPERTIES\",\n      \"value\": [\n        {\n          \"id\": \"servers\",\n          \"type\": \"JSON\",\n          \"value\": [\n            \"172.27.64.50\"\n          ]\n        },\n        {\n          \"id\": \"timezone\",\n          \"type\": \"STRING\",\n          \"value\": \"America/Los_Angeles\"\n        }\n      ]\n    },\n    {\n      \"id\": \"dns\",\n      \"type\": \"PROPERTIES\",\n      \"value\": [\n        {\n          \"id\": \"servers\",\n          \"type\": \"JSON\",\n          \"value\": [\n            \"172.27.64.50\"\n          ]\n        },\n        {\n          \"id\": \"search\",\n          \"type\": \"JSON\",\n          \"value\": [\n            \"localhost\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"syslog\",\n      \"type\": \"PROPERTIES\",\n      \"value\": [\n        {\n          \"id\": \"servers\",\n          \"type\": \"JSON\",\n          \"value\": []\n        }\n      ]\n    }\n  ],\n    \"configurationProcessorReference\": {\n        \"link\": \"https://localhost/mgmt/shared/iapp/processors/bigip-settings-config\"\n    },\n    \"configProcessorTimeoutSeconds\": 200,\n    \"state\": \"BINDING\"\n}"
+						},
+						"url": {
+							"raw": "https://{{docker_host}}:8443/mgmt/shared/iapp/blocks/",
+							"protocol": "https",
+							"host": [
+								"{{docker_host}}"
+							],
+							"port": "8443",
+							"path": [
+								"mgmt",
+								"shared",
+								"iapp",
+								"blocks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Reset Task Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{docker_host}}:8443/mgmt/shared/iapp/blocks/{{settings_task_id2}}",
+							"protocol": "https",
+							"host": [
+								"{{docker_host}}"
+							],
+							"port": "8443",
+							"path": [
+								"mgmt",
+								"shared",
+								"iapp",
+								"blocks",
+								"{{settings_task_id2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View 'BOUND' blocks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var respData = JSON.parse(responseBody);",
+									"",
+									"tests[\"response has task id: \" +respData.items[0].id] = respData.items[0].id;",
+									"",
+									"postman.setEnvironmentVariable('block_instance_id',respData.items[0].id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-F5-Auth-Token",
+								"value": "{{iwf_admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{docker_host}}:8443/mgmt/shared/iapp/blocks/?$filter=state%20eq%20'BOUND'",
+							"protocol": "https",
+							"host": [
+								"{{docker_host}}"
+							],
+							"port": "8443",
+							"path": [
+								"mgmt",
+								"shared",
+								"iapp",
+								"blocks",
+								""
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "state%20eq%20'BOUND'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Redeploy the original block",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"state\": \"BINDING\"\n}"
+						},
+						"url": {
+							"raw": "https://{{docker_host}}:8443/mgmt/shared/iapp/blocks/{{settings_task_id}}",
+							"protocol": "https",
+							"host": [
+								"{{docker_host}}"
+							],
+							"port": "8443",
+							"path": [
+								"mgmt",
+								"shared",
+								"iapp",
+								"blocks",
+								"{{settings_task_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module 6 (Basic AS3 Examples)",
+			"description": "",
+			"item": [
+				{
+					"name": "Install AS3 RPM",
+					"description": "",
+					"item": [
+						{
+							"name": "Enable LX Package Management",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "17d3ef06-ac13-4678-b237-c848a722026c",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\":\"run\", \n\t\"utilCmdArgs\": \"-c 'touch /var/config/rest/iapps/enable'\"\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/util/bash",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"bash"
+									]
+								},
+								"description": "Not strictly necessary but useful to see the status of the package in the GUI."
+							},
+							"response": []
+						},
+						{
+							"name": "Restart the TMUI Service",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "17d3ef06-ac13-4678-b237-c848a722026c",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\":\"restart\"\n\t\n}\n"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/sys/service/tomcat",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"sys",
+										"service",
+										"tomcat"
+									]
+								},
+								"description": "Not strictly necessary but useful to see the status of the package in the GUI."
+							},
+							"response": []
+						},
+						{
+							"name": "Download the AS3 Package",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d965dd9-2536-4702-8234-fc658d33c92d",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"command\":\"run\", \n\t\"utilCmdArgs\": \"-c 'curl -L -s -o /var/config/rest/downloads/{{as3_rpm_name}} https://github.com/F5Networks/f5-appsvcs-extension/raw/{{as3_rpm_branch}}/dist/{{as3_rpm_name}}'\"\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/tm/util/bash",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"tm",
+										"util",
+										"bash"
+									]
+								},
+								"description": "Github repo should be updated with a CURRENT tag in master or some mechanism to get the latest. This will need to be updated."
+							},
+							"response": []
+						},
+						{
+							"name": "Install RPM",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"tests[\"response has id: \" +respData.id] = respData.id;",
+											"",
+											"postman.setEnvironmentVariable('rpm_installation_status_id',respData.id);",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\"operation\": \"INSTALL\",\r\"packageFilePath\": \"/var/config/rest/downloads/{{as3_rpm_name}}\"\r}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/iapp/package-management-tasks",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"iapp",
+										"package-management-tasks"
+									]
+								},
+								"description": "Request installs the RPM on the BIG-IP. This will not be necessary once AS3 container support is added in subsequent versions.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Check RPM install process status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is: \" + responseCode.code] = responseCode.code === 200;",
+											"",
+											"var    retryCounter = environment.retryCounter;",
+											"var    retryInterval = environment.retryInterval;",
+											"var    retryLimit = environment.retryLimit;",
+											"",
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"function pausecomp(millis)",
+											"{",
+											"    var date = new Date();",
+											"    var curDate = null;",
+											"    do { curDate = new Date(); }",
+											"    while(curDate-date < millis);",
+											"}",
+											"",
+											"if ( respData.status != \"FINISHED\") {",
+											"    tests[\"retry-counter value is: \" + retryCounter] = retryCounter;",
+											"    if ( parseInt(retryCounter) < parseInt(retryLimit))",
+											"    {",
+											"        tests[\"retry-counter value is: \" + retryCounter] = retryCounter;",
+											"        postman.setEnvironmentVariable(\"retryCounter\", parseInt(retryCounter) + 1);",
+											"        pausecomp(retryInterval);",
+											"        postman.setNextRequest(\"Check RPM install process status\");",
+											"    } else",
+											"    {",
+											"        postman.setEnvironmentVariable(\"retryCounter\", 0);",
+											"        console.log(\"Resetting, retry counter to 0\");",
+											"        tests[\"Retries Expired\"] = true === false;",
+											"}",
+											"} else {",
+											"    tests[\"Process Status is: \" + respData.status] = respData.status == \"FINISHED\"",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/iapp/package-management-tasks/{{rpm_installation_status_id}}",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"iapp",
+										"package-management-tasks",
+										"{{rpm_installation_status_id}}"
+									]
+								},
+								"description": "See if the RPM install procedure finished successfully."
+							},
+							"response": []
+						},
+						{
+							"name": "AS3 selfTest",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "54ad9344-9b6d-427e-844b-51a73b5ae960",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var respData = JSON.parse(responseBody);",
+											"",
+											"tests[\"AS3 selfTest Passed\"] = respData[0].message =  \"all tests passed\";",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/selftest",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"selftest"
+									]
+								},
+								"description": "Run the built-in AS3 selfTest.\n\nNote the following from the Docs:\n\"If an error displays, this is an indication that AS3 is not entirely compatible with your BIG-IP software version or module provisioning. This does not necessarily imply that you cannot use AS3 successfully.\""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Declaration Examples",
+					"description": "",
+					"item": [
+						{
+							"name": "Dry-run Sample 1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"dry-run\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"Sample 1\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"Sample_01\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.1.10\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                             \"servicePort\": 80,\n                             \"serverAddresses\": [\n                                 \"192.0.1.10\",\n                                 \"192.0.1.11\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deploy Sample 1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"deploy\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"Sample 1\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"Sample_01\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.1.10\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                             \"servicePort\": 80,\n                             \"serverAddresses\": [\n                                 \"192.0.1.10\",\n                                 \"192.0.1.11\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sample1 -- view defaults",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"deploy\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"Sample 1\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"Sample_01\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.1.10\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                             \"servicePort\": 80,\n                             \"serverAddresses\": [\n                                 \"192.0.1.10\",\n                                 \"192.0.1.11\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare/Sample_01?show=full",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare",
+										"Sample_01"
+									],
+									"query": [
+										{
+											"key": "show",
+											"value": "full"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deploy Sample 2",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"class\": \"AS3\",\n    \"action\": \"deploy\",\n    \"persist\": true,\n    \"declaration\": {\n            \"class\": \"ADC\",\n            \"schemaVersion\": \"3.0.0\",\n            \"id\": \"urn:uuid:a858e55e-bbe6-42ce-a9b9-0f4ab33e3bf7\",\n            \"label\": \"Sample 2\",\n            \"remark\": \"HTTP with no compression, BIG-IP tcp profile, iRule for pool\",\n            \"constants\": {\n                    \"myNotes\": \"F5 suggested I timestamp declarations, so...\",\n                    \"timestamp\": \"2017-11-27T18:26:45Z\",\n                    \"anotherProperty\": \"And I can put anything I want here...\",\n                    \"someUsefulNumber\": 3.14159265\n            },\n            \"Sample_02\": {\n                    \"class\": \"Tenant\",\n                    \"A1\": {\n                            \"class\": \"Application\",\n                            \"template\": \"http\",\n                            \"serviceMain\": {\n                                    \"class\": \"Service_HTTP\",\n                                    \"virtualAddresses\": [\n                                            \"10.0.3.10\"\n                                    ],\n                                    \"pool\": \"dfl_pool\",\n                                    \"profileHTTPCompression\": \"basic\",\n                                    \"iRules\": [\n                                            \"choose_pool\"\n                                    ],\n                                    \"profileTCP\": {\n                                            \"bigip\": \"/Common/mptcp-mobile-optimized\"\n                                    }\n                            },\n                            \"dfl_pool\": {\n                                    \"class\": \"Pool\",\n                                    \"monitors\": [\n                                            \"http\"\n                                    ],\n                                    \"members\": [{\n                                            \"servicePort\": 80,\n                                            \"serverAddresses\": [\n                                                    \"192.0.3.10\",\n                                                    \"192.0.3.11\"\n                                            ]\n                                    }]\n                            },\n                            \"pvt_pool\": {\n                                    \"class\": \"Pool\",\n                                    \"monitors\": [\n                                            \"http\"\n                                    ],\n                                    \"members\": [{\n                                            \"servicePort\": 80,\n                                            \"serverAddresses\": [\n                                                    \"192.0.3.20\",\n                                                    \"192.0.3.21\"\n                                            ]\n                                    }]\n                            },\n                            \"choose_pool\": {\n                                    \"class\": \"iRule\",\n                                    \"remark\": \"choose private pool based on IP\",\n                                    \"iRule\": \"when CLIENT_ACCEPTED {\\nif {[IP::client_addr] starts_with \\\"10.\\\"} {\\n pool `*pvt_pool`\\n }\\n}\"\n                            }\n                    }\n            }\n    }\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deploy Sample 3",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"class\": \"AS3\",\n   \"action\": \"deploy\",\n   \"persist\": true,\n   \"declaration\": {\n           \"class\": \"ADC\",\n           \"schemaVersion\": \"3.0.0\",\n           \"id\": \"urn:uuid:551fcf84-993e-467a-954b-99d4a8b29b48\",\n           \"label\": \"Sample 3\",\n           \"remark\": \"TCP load-balanced to ICAP with custom monitor\",\n           \"Sample_03\": {\n               \"class\": \"Tenant\",\n\t           \"A1\": {\n\t                   \"class\": \"Application\",\n\t                   \"template\": \"tcp\",\n\t                   \"serviceMain\": {\n\t                           \"class\": \"Service_TCP\",\n\t                           \"virtualAddresses\": [\n\t                                   \"10.0.5.10\"\n\t                           ],\n\t                           \"virtualPort\": 1344,\n\t                           \"pool\": \"svc_pool\"\n\t                   },\n\t                   \"svc_pool\": {\n\t                           \"class\": \"Pool\",\n\t                           \"monitors\": [{\n\t                                   \"use\": \"icap_monitor\"\n\t                           }],\n\t                           \"members\": [{\n\t                                   \"servicePort\": 1344,\n\t                                   \"serverAddresses\": [\n\t                                           \"192.0.5.10\",\n\t                                           \"192.0.5.11\"\n\t                                   ]\n\t                           }]\n\t                   },\n\t                   \"icap_monitor\": {\n\t                           \"class\": \"Monitor\",\n\t                           \"monitorType\": \"tcp\",\n\t                           \"send\": \"OPTIONS icap://icap.example.net/ ICAP/1.0\\r\\nUser-Agent: f5-ADC\\r\\n\\r\\n\",\n\t                           \"receive\": \"ICAP/1.0 200 OK\",\n\t                           \"adaptive\": false\n\t                   }\n                   }\n           }\n   }\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deploy Sample 4",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"class\": \"AS3\",\n   \"action\": \"deploy\",\n   \"persist\": true,\n   \"declaration\": {\n      \"class\": \"ADC\",\n      \"schemaVersion\": \"3.0.0\",\n      \"id\": \"urn:uuid:76f06c5a-b673-430d-8df4-d817cb3b9f3c\",\n      \"label\": \"Sample 4\",\n      \"remark\": \"HTTP with extra corp-only virtual\",\n      \"controls\": {\n         \"trace\": true\n      },\n      \"Sample_04\": {\n         \"class\": \"Tenant\",\n         \"A1\": {\n            \"class\": \"Application\",\n            \"template\": \"http\",\n            \"serviceMain\": {\n               \"class\": \"Service_HTTP\",\n               \"virtualAddresses\": [\n                  \"10.0.7.10\"\n               ],\n               \"pool\": \"web_pool\",\n               \"persistenceMethods\": [{\n                  \"use\": \"jsessionid\"\n               }]\n            },\n            \"pvt_vs\": {\n               \"class\": \"Service_HTTP\",\n               \"remark\": \"Serves corporate LAN clients only\",\n               \"virtualAddresses\": [\n                  [\n                     \"10.1.7.10\",\n                     \"10.0.0.0/8\"\n                  ]\n               ],\n               \"snatpool\": \"auto\",\n               \"pool\": \"web_pool\"\n            },\n            \"web_pool\": {\n               \"class\": \"Pool\",\n               \"monitors\": [\n                  \"http\"\n               ],\n               \"members\": [{\n                  \"servicePort\": 80,\n                  \"serverAddresses\": [\n                     \"192.0.7.10\",\n                     \"192.0.7.11\"\n                  ]\n               }]\n            },\n            \"jsessionid\": {\n               \"class\": \"Persist\",\n               \"persistenceMethod\": \"cookie\",\n               \"cookieMethod\": \"hash\",\n               \"cookieName\": \"JSESSIONID\"\n            }\n         }\n      }\n   }\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deploy Sample 5",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"class\": \"AS3\",\n   \"action\": \"deploy\",\n   \"persist\": true,\n   \"declaration\": {\n      \"class\": \"ADC\",\n      \"schemaVersion\": \"3.0.0\",\n      \"id\": \"urn:uuid:773ff79d-6df8-4ea7-8ce3-06485202167e\",\n      \"label\": \"Sample 5\",\n      \"remark\": \"An HTTP and an HTTPS application\",\n      \"controls\": {\n         \"trace\": true\n      },\n      \"Sample_05\": {\n         \"class\": \"Tenant\",\n         \"A1\": {\n             \"class\": \"Application\",\n             \"template\": \"http\",\n             \"serviceMain\": {\n                 \"class\": \"Service_HTTP\",\n                 \"virtualAddresses\": [\n                 \"10.0.9.10\"\n                 ],\n                 \"pool\": \"gce_pool\"\n             },\n             \"gce_pool\": {\n                 \"class\": \"Pool\",\n                 \"monitors\": [\n                     \"http\"\n                 ],\n                 \"members\": [\n                     {\n                     \t\"servicePort\": 80,\n                         \"serverAddresses\": [\n                             \"192.0.8.10\",\n                             \"192.0.8.11\"\n                         ]\n                     }\n                 ]\n             }\n         },\n         \"A2\": {\n            \"class\": \"Application\",\n            \"template\": \"https\",\n            \"serviceMain\": {\n               \"class\": \"Service_HTTPS\",\n               \"virtualAddresses\": [\n                  \"10.0.9.20\"\n               ],\n               \"pool\": \"web_pool\",\n               \"serverTLS\": \"webtls\"\n            },\n            \"web_pool\": {\n               \"class\": \"Pool\",\n               \"monitors\": [\n                  \"http\"\n               ],\n               \"members\": [{\n                   \"servicePort\": 80,\n                   \"serverAddresses\": [\n                      \"192.0.8.10\",\n                      \"192.0.8.11\"\n                   ]\n               }]\n            },\n            \"webtls\": {\n               \"class\": \"TLS_Server\",\n               \"certificates\": [{\n                  \"certificate\": \"webcert\"\n               }]\n            },\n            \"webcert\": {\n               \"class\": \"Certificate\",\n               \"remark\": \"in practice we recommend using a passphrase\",\n               \"certificate\": \"-----BEGIN CERTIFICATE-----\\nMIICnDCCAgWgAwIBAgIJAJ5n2b0OCEjwMA0GCSqGSIb3DQEBCwUAMGcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApXYXNoaW5ndG9uMRAwDgYDVQQHDAdTZWF0dGxlMRQwEgYDVQQKDAtmNV9OZXR3b3JrczEbMBkGA1UEAwwSc2FtcGxlLmV4YW1wbGUubmV0MB4XDTE3MTEyNjE5NTAyNFoXDTE4MDIyNTE5NTAyNFowZzELMAkGA1UEBhMCVVMxEzARBgNVBAgMCldhc2hpbmd0b24xEDAOBgNVBAcMB1NlYXR0bGUxFDASBgNVBAoMC2Y1X05ldHdvcmtzMRswGQYDVQQDDBJzYW1wbGUuZXhhbXBsZS5uZXQwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALEsuXmSXVQpYjrZPW+WiTBjn491mwZYT7Q92V1HlSBtM6WdWlK1aZN5sovfKtOX7Yrm8xa+e4o/zJ2QYLyyv5O+t2EGN/4qUEjEAPY9mwJdfzRQy6Hyzm84J0QkTuUJ/EjNuPji3D0QJRALUTzu1UqqDCEtiN9OGyXEkh7uvb7BAgMBAAGjUDBOMB0GA1UdDgQWBBSVHPNrGWrjWyZvckQxFYWO59FRFjAfBgNVHSMEGDAWgBSVHPNrGWrjWyZvckQxFYWO59FRFjAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4GBAJeJ9SEckEwPhkXOm+IuqfbUS/RcziifBCTmVyE+Fa/j9pKSYTgiEBNdbJeBEa+gPMlQtbV7Y2dy8TKx/8axVBHiXC5geDML7caxOrAyHYBpnx690xJTh5OIORBBM/a/NvaR+P3CoVebr/NPRh9oRNxnntnqvqD7SW0U3ZPe3tJc\\n-----END CERTIFICATE-----\",\n               \"privateKey\": \"-----BEGIN RSA PRIVATE KEY-----\\nProc-Type: 4,ENCRYPTED\\nDEK-Info: AES-256-CBC,D8FFCE6B255601587CB54EC29B737D31\\n\\nkv4Fc3Jn0Ujkj0yRjt+gQQfBLSNF2aRLUENXnlr7Xpzqu0Ahr3jS1bAAnd8IWnsR\\nyILqVmKsYF2DoHh0tWiEAQ7/y/fe5DTFhK7N4Wml6kp2yVMkP6KC4ssyYPw27kjK\\nDBwBZ5O8Ioej08A5sgsLCmglbmtSPHJUn14pQnMTmLOpEtOsu6S+2ibPgSNpdg0b\\nCAJNG/KHe+Vkx59qNDyDeKb7FZOlsX30+y67zUq9GQqJEDuysPJ2BUNP0IJXAjst\\nFIt1qNoZew+5KDYs7u/lPxcMGTirUhgI84Jy4WcDvSOsP/tKlxj04TbIE3epmSKy\\n+TihHkwY7ngIGtcm3Sfqk5jz2RXoj1/Ac3SW8kVTYaOUogBhn7zAq4Wju6Et4hQG\\nRGapsJp1aCeZ/a4RCDTxspcKoMaRa97/URQb0hBRGx3DGUhzpmX9zl7JI2Xa5D3R\\nmdBXtjLKYJTdIMdd27prBEKhMUpae2rz5Mw4J907wZeBq/wu+zp8LAnecfTe2nGY\\nE32x1U7gSEdYOGqnwxsOexb1jKgCa67Nw9TmcMPV8zmH7R9qdvgxAbAtwBl1F9OS\\nfcGaC7epf1AjJLtaX7krWmzgASHl28Ynh9lmGMdv+5QYMZvKG0LOg/n3m8uJ6sKy\\nIzzvaJswwn0j5P5+czyoV5CvvdCfKnNb+3jUEN8I0PPwjBGKr4B1ojwhogTM248V\\nHR69D6TxFVMfGpyJhCPkbGEGbpEpcffpgKuC/mEtMqyDQXJNaV5HO6HgAJ9F1P6v\\n5ehHHTMRvzCCFiwndHdlMXUjqSNjww6me6dr6LiAPbejdzhL2vWx1YqebOcwQx3G\\n-----END RSA PRIVATE KEY-----\",\n               \"passphrase\": {\n                   \"ciphertext\": \"ZjVmNQ==\",\n                   \"protected\": \"eyJhbGciOiJkaXIiLCJlbmMiOiJub25lIn0\"\n               }\n           }\n         }\n      }\n   }\n}"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Stored declarations by age",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"deploy\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"Sample 1\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"Sample_01\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.1.10\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                             \"servicePort\": 80,\n                             \"serverAddresses\": [\n                                 \"192.0.1.10\",\n                                 \"192.0.1.11\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare?age=list",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									],
+									"query": [
+										{
+											"key": "age",
+											"value": "list"
+										}
+									]
+								},
+								"description": "oh look... you need to specify a historylimit with every request:\n\n{\n\"class\":\"AS3\",\n\"action\": \"deploy\",\n\"historyLimit\": 15,\n\"declaration\":  { \n  \"class\": \"ADC\",\n  \"schemaVersion\": \"3.0.0\",\n  \"id\": \"declarationID\",\n  \"controls\": {\n      \"logLevel\": \"debug\"\n  },\n  \"myTenant\": {\n...\n\ndefault is 4 and max is 15."
+							},
+							"response": []
+						},
+						{
+							"name": "Get declaration for tenant Sample_01",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"deploy\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"Sample 1\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"Sample_01\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.1.10\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                             \"servicePort\": 80,\n                             \"serverAddresses\": [\n                                 \"192.0.1.10\",\n                                 \"192.0.1.11\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare/Sample_01",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare",
+										"Sample_01"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Sample 1",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"deploy\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"Sample 1\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"Sample_01\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.1.10\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                             \"servicePort\": 80,\n                             \"serverAddresses\": [\n                                 \"192.0.1.10\",\n                                 \"192.0.1.11\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare/Sample_01",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare",
+										"Sample_01"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete All Tenants",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"deploy\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"Sample 1\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"Sample_01\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.1.10\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                             \"servicePort\": 80,\n                             \"serverAddresses\": [\n                                 \"192.0.1.10\",\n                                 \"192.0.1.11\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Working Declaration Dry-run",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"dry-run\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"TechDay2018\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"TechDay2018\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.10.14\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                         \t   \"servicePort\": {{pool_member1_port}},\n                               \"serverAddresses\": [\n                                 \"{{docker_host}}\"\n                             ]\n                         },\n                         {\n                         \t   \"servicePort\": {{pool_member2_port}},\n                               \"serverAddresses\": [\n                                 \"{{docker_host}}\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Working Declaration Deploy",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-F5-Auth-Token",
+										"value": "{{bigip1_admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n     \"class\": \"AS3\",\n     \"action\": \"deploy\",\n     \"persist\": true,\n     \"declaration\": {\n         \"class\": \"ADC\",\n         \"schemaVersion\": \"3.0.0\",\n         \"id\": \"urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d\",\n         \"label\": \"TechDay2018\",\n         \"remark\": \"Simple HTTP Service with Round-Robin Load Balancing\",\n         \"TechDay2018\": {\n             \"class\": \"Tenant\",\n             \"A1\": {\n                 \"class\": \"Application\",\n                 \"template\": \"http\",\n                 \"serviceMain\": {\n                     \"class\": \"Service_HTTP\",\n                     \"virtualAddresses\": [\n                         \"10.0.10.14\"\n                     ],\n                     \"pool\": \"web_pool\"\n                 },\n                 \"web_pool\": {\n                     \"class\": \"Pool\",\n                     \"monitors\": [\n                         \"http\"\n                     ],\n                     \"members\": [\n                         {\n                         \t   \"servicePort\": {{pool_member1_port}},\n                               \"serverAddresses\": [\n                                 \"{{docker_traffic}}\"\n                             ]\n                         },\n                         {\n                         \t   \"servicePort\": {{pool_member2_port}},\n                               \"serverAddresses\": [\n                                 \"{{docker_traffic}}\"\n                             ]\n                         }\n                     ]\n                 }\n             }\n         }\n     }\n }"
+								},
+								"url": {
+									"raw": "https://{{bigip1_mgmt}}/mgmt/shared/appsvcs/declare",
+									"protocol": "https",
+									"host": [
+										"{{bigip1_mgmt}}"
+									],
+									"path": [
+										"mgmt",
+										"shared",
+										"appsvcs",
+										"declare"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}

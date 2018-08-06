@@ -1,0 +1,101 @@
+{
+  "name": "bigip-settings",
+  "inputProperties": [
+    {
+      "id": "deviceReference",
+      "type": "REFERENCE",
+      "value": {
+        "link": "localhost"
+      }
+    },
+    {
+      "id": "resetToDefaults",
+      "type": "BOOLEAN",
+      "value": false
+    },
+    {
+      "id": "displaySetup",
+      "type": "BOOLEAN",
+      "value": false
+    },
+    {
+      "id": "hostname",
+      "type": "STRING"
+    },
+    {
+      "id": "license",
+      "type": "PROPERTIES",
+      "value": [
+        {
+          "id": "baseRegKey",
+          "type": "STRING"
+        },
+        {
+          "id": "addOnKeys",
+          "type": "JSON",
+          "value": []
+        },
+        {
+          "id": "dossier",
+          "type": "STRING"
+        },
+        {
+          "id": "eulaText",
+          "type": "STRING"
+        },
+        {
+          "id": "acceptEula",
+          "type": "BOOLEAN",
+          "value": false
+        }
+      ]
+    },
+    {
+      "id": "ntp",
+      "type": "PROPERTIES",
+      "value": [
+        {
+          "id": "servers",
+          "type": "JSON",
+          "value": []
+        },
+        {
+          "id": "timezone",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "id": "dns",
+      "type": "PROPERTIES",
+      "value": [
+        {
+          "id": "servers",
+          "type": "JSON",
+          "value": []
+        },
+        {
+          "id": "search",
+          "type": "JSON",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "syslog",
+      "type": "PROPERTIES",
+      "value": [
+        {
+          "id": "servers",
+          "type": "JSON",
+          "value": []
+        }
+      ]
+    }
+  ],
+  "configProcessorTimeoutSeconds": 200,
+  "configurationProcessorReference": {
+    "link": "https://localhost/mgmt/shared/iapp/processors/bigip-settings-config"
+  },
+  "state": "TEMPLATE"
+}
