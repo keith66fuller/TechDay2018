@@ -10,7 +10,7 @@ __This procedure is only suitable for Dev/POC systems. You would never want to d
     * In order for _restnoded_ to register your change the service will need to be restarted. One way to do this is through tmsh.
     
 ```bash 
-tmsh restart sys service restnoded
+$ bigstart restart restnoded
 ```
 * Verify your worker was updated by sending an appropiate GET request.
 
@@ -26,9 +26,13 @@ Concepts: Anatomy of a worker, updating a worker, registering those changes in r
 
 
 ### Task 2: Build/Install the MemoryWorker.js extension
-* Using the steps in Task 1 and Task 2 from Module 1, build and install the memoryworker.js iControl extension. 
-  * Copy the extension from the /TechDay2018-master/LabFiles/Module2/ folder in the repo to the build directory on the Big-IP device.
-  * Update the {{extension_name}} Postman environment variable.
+* Using the steps in Task 1 and Task 2 from Module 1, build and install the memoryworker.js iControl extension.
+  * Create the build directory.
+  ```bash
+  $ mkdir -p /var/config/rest/iapps/MemoryWorker
+  ```
+  * Copy the "memoryworker.js" extension from the /TechDay2018-master/LabFiles/Module2/ folder in the repo to the build directory on the Big-IP device.
+  * Update the {{extension_name}} Postman environment variable (the build directory name - ie. "MemoryWorker").
   * Build the RPM with the correct request.
   * Copy the RPM to the installation directory.
   * Install the RPM with the correct request.
