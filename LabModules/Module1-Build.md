@@ -28,7 +28,7 @@ mkdir -p /var/config/rest/iapps/HelloWorld/nodejs
 * Browse to the "Task 1: Build RPM" folder of the "Module1" directory.
 
 
-* Set/verify the Postman environment variable {{extension_name}} is set to the build directory name (just the directory name -- not the full path) you created earlier -- "HelloWorld" in this case.
+* __Set__ the Postman environment variable {{extension_name}} is set to the build directory name (just the directory name -- not the full path) you created earlier -- "HelloWorld" in this case.
 
 
 * Send the 'Create RPM on Big-IP' request. This procedure follows the 'tasks' pattern (the initial ```status``` will be "CREATED").
