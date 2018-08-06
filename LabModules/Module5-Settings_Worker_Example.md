@@ -3,7 +3,7 @@
 * ```cd``` to the provided build directory.
 
 ```bash 
-$ cd /Techday2018/LabFiles/Module5/bigip-settings-v2-master
+$ cd /Techday2018-master/LabFiles/Module5/bigip-settings-v2-master
 ```
 
 * Build the container needed for the exercise.
