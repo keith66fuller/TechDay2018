@@ -20,7 +20,7 @@ The UDF hosted Lab environment consists of two BIG-IP devices (TMOS 13.1), an ub
 | Docker           | 10.1.1.6     | 10.1.10.6 | 
 
 
-The BIG-IPs are using default credentials. For the Windows and Docker host use ```student/student```.
+The BIG-IPs are using default credentials. For the Windows and Docker hosts use ```student/student```.
 
 **Please go ahead and start the deployment now as the F5 devices will take some time (5-6 min) to boot.**
 
